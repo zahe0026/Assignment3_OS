@@ -17,11 +17,11 @@ LIB_SEQ_OBJECTS = $(LIB_SEQ_SOURCES:.c=.o)
 LIB_SEQ         = aq_seq
 LIB_SEQ_NAME    = lib$(LIB_SEQ).a
 
-DEMO_SOURCES = aq_demo.c aux.c
+DEMO_SOURCES = aq_demo.c auxiliary.c
 DEMO_OBJECTS = $(DEMO_SOURCES:.c=.o)
 
 TEST_FILE   ?= aq_test.c
-TEST_SOURCES = $(TEST_FILE) aux.c
+TEST_SOURCES = $(TEST_FILE) auxiliary.c
 TEST_OBJECTS = $(TEST_SOURCES:.c=.o)
 
 DEMO_EXECUTABLE = demo
