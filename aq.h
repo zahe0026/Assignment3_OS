@@ -63,6 +63,12 @@ int aq_size( AlarmQueue aq);
  */
 int aq_alarms( AlarmQueue aq);
 
+/**
+ * @name    aq_destroy
+ * @brief   Destroys the alarm queue, freeing all resources.
+ */
+void aq_destroy(AlarmQueue aq);
+
 
 #endif /* LIBAQ_H_INCLUDED */
 
