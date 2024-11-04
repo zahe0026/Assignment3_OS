@@ -7,6 +7,7 @@
 
 #ifndef LIBAQ_H_INCLUDED
 #define LIBAQ_H_INCLUDED
+#define AQ_OK 0
 
 #include <stddef.h>
 

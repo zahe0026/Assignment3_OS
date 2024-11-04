@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "aux.h"
+#include "auxiliary.h"
 
 
 typedef struct {

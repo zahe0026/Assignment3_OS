@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <pthread.h>
 #include <unistd.h>
 #include "aq.h"
@@ -18,7 +19,7 @@ void* alarm_sender1(void* arg) {
 
 void* alarm_sender2(void* arg) {
     // Wait a bit to ensure first alarm is sent
-    usleep(100000);  // 100ms
+    usleep(1000);  //Delay
     
     printf("Sender2: Attempting to send second alarm message\n");
     char* msg2 = strdup("Alarm2");
@@ -42,7 +43,7 @@ void* alarm_sender2(void* arg) {
 
 void* message_receiver(void* arg) {
     // Wait to ensure messages are queued
-    usleep(200000);  // 200ms
+    usleep(1000);  //Delay
     
     while (1) {
         void* msg;
@@ -53,7 +54,7 @@ void* message_receiver(void* arg) {
         free(msg);
         
         // Add small delay between receives to make output more readable
-        usleep(50000);  // 50ms
+        usleep(1000);  // 50ms
     }
     return NULL;
 }
