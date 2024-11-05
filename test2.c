@@ -1,3 +1,9 @@
+/*
+This test checks how the alarm queue behaves when normal 
+messages and an alarm message are sent concurrently, 
+ensuring that alarm messages are prioritized and received 
+after the normal messages.
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,14 +21,14 @@ void* normal_message_sender(void* arg) {
         sprintf(msg, "Normal%d", i);
         printf("NormalSender: Sending message: %s\n", msg);
         aq_send(queue, msg, AQ_NORMAL);
-        usleep(5000);  // 5s delay between sends
+        usleep(5000);  // Delay
     }
     return NULL;
 }
 
 void* alarm_message_sender(void* arg) {  // This is your thread function
     // Wait for some normal messages to be queued
-    usleep(5000);  // 5sec delay
+    usleep(5000);  // Delay
     
     char* alarm_msg = strdup("Alarm1");
     printf("AlarmSender: Sending alarm message: %s\n", alarm_msg);
@@ -33,7 +39,7 @@ void* alarm_message_sender(void* arg) {  // This is your thread function
 
 void* message_receiver(void* arg) {
     // Wait to ensure messages are in queue
-    usleep(5000);  // 5sec delay
+    usleep(5000);  // Delay
     
     // Receive and track order of messages
     int msg_count = 0;
@@ -47,7 +53,7 @@ void* message_receiver(void* arg) {
         
         free(msg);
         msg_count++;
-        usleep(5000);  // 5sec between receives
+        usleep(5000);  // Delay
     }
     return NULL;
 }
@@ -59,14 +65,14 @@ int main() {
         return 1;
     }
     
-    // Create threads - Fixed function names
+    // Create threads 
     pthread_create(&normal_sender, NULL, normal_message_sender, NULL);
-    pthread_create(&alarm_sender, NULL, alarm_message_sender, NULL);  // Fixed
+    pthread_create(&alarm_sender, NULL, alarm_message_sender, NULL); 
     pthread_create(&receiver, NULL, message_receiver, NULL);
     
-    // Wait for all threads to complete - Fixed thread handle names
+    // Wait for all threads to complete
     pthread_join(normal_sender, NULL);
-    pthread_join(alarm_sender, NULL);  // Fixed
+    pthread_join(alarm_sender, NULL); 
     pthread_join(receiver, NULL);
     
     printf("Test completed.\n");
