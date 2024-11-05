@@ -40,26 +40,21 @@ void* alarm_sender2(void* arg) {
     return NULL;
 }
 
+
 void* message_receiver(void* arg) {
-    int empty_count = 0;  // Counter for consecutive empty receives
-    
+    // Wait to ensure messages are queued
+    usleep(2000);  // 200ms
+
     while (1) {
         void* msg;
         int kind = aq_recv(queue, &msg);
-        
-        if (kind == AQ_NO_MSG) {
-            empty_count++;
-            // If queue is empty and all senders are done, exit
-            if (senders_done == 2 && empty_count > 3) {
-                break;
-            }
-            usleep(1000);  // Short sleep before retry
-            continue;
-        }
-        
-        empty_count = 0;  // Reset counter on successful receive
+        if (kind == AQ_NO_MSG) break;
+
         printf("Receiver: Received message: %s, type: %d\n", (char*)msg, kind);
         free(msg);
+
+        // Add small delay between receives to make output more readable
+        usleep(5000);  // 50ms
     }
     return NULL;
 }
